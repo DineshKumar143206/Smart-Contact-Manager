@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class = "light" xmlns:th="http://www.thymeleaf.org" th:fragment="common(content,title)">
+<head>
+<meta charset="UTF-8">
+<title th:replace = "${title}">Base Page</title>
+
+<!-- tailwind css -->
+<link rel="stylesheet" th:href="@{'/css/output.css'}" />
+
+<!-- style.css -->
+<link rel="stylesheet" th:href="@{'/css/google_button.css'}" />
+
+<!-- Flowbite css -->
+<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+
+<!-- Font Awesome icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body class = "bg-gray-100 dark:bg-gray-900 dark:text-white">
+
+<!-- Navbar -->
+<!-- navbar of user logged in -->
+<div th:if = "${loggedinuser}">
+
+	<div th:replace = "~{user/user_navbar :: user_navbar_frag}"></div> 
+
+</div>
+
+<!-- nav bar of opening page -->
+<div th:unless="${loggedinuser}">
+	<div th:replace = "~{navbar :: navbar}"></div> 
+</div>
+
+
+<!-- inheriting contents -->
+<!-- <div class = "p-8 mt-10"> -->
+<section th:replace="${content}"></section>
+</div>
+
+<script th:src = "@{'/js/darkmode.js'}"></script>
+
+<!-- Flowbite js -->
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+<!-- Sweetalert2 js -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>
