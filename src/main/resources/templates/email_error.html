@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace = "~{base::common(~{::#content},~{::title})}">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+</head>
+<body>
+
+<div id ="content" class = "text-center mt-5 md:w-1/2 mx-auto">
+<div th:replace = "~{message::messagebox}"></div>
+<a href = "/login" class = "bg-red-800 mt-2 text-white px-3 py-2 rounded-lg">Login</a>
+</div>
+
+
+</body>
+</html>
