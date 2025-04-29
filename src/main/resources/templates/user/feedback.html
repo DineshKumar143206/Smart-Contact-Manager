@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{base::common(~{::#content},~{::title})}">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback</title>
+</head>
+<body>
+<div id="content" class="flex">
+
+  <!-- Sidebar -->
+  <div th:if="${loggedinuser}" class="w-1/5">
+    <div th:replace="~{user/sidebar :: sidebar}"></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 bg-gray-100 min-h-screen mt-16"> <!-- mt-16 clears fixed navbar height -->
+
+    <!-- Header Section -->
+    <section class="bg-orange-700 text-white py-12 px-12 text-center shadow-md">
+      <div class="max-w-4xl mx-auto px-4">
+        <h1 class="text-4xl font-bold mb-2">We Value Your Feedback</h1>
+        <p class="text-lg">Thanks for using Smart Contact Manager. Your experience matters to us!</p>
+      </div>
+    </section>
+
+    <!-- Feedback Message Section -->
+    <section class="py-16 px-4">
+      <div class="max-w-3xl mx-auto bg-white shadow-md rounded-xl p-8 text-center">
+        <p class="text-gray-700 text-lg mb-6">
+          We hope Smart Contact Manager has helped you stay organized and productive.
+          If you have any suggestions, compliments, or issues you’d like to share,
+          feel free to email us or reach out on social media.
+        </p>
+        <div class="text-lg text-orange-700 font-semibold mb-4">
+          📬 Email us at: <span class="font-bold">feedback@smartcontactmanager.com</span>
+        </div>
+        <div class="text-gray-600">
+          Or connect with us on our
+          <a href="#" class="text-blue-500 underline hover:text-blue-700">Twitter</a>
+          or
+          <a href="#" class="text-blue-500 underline hover:text-blue-700">LinkedIn</a> pages.
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+</body>
+</html>
