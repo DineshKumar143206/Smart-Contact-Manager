@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{base::common(~{::#content},~{::title})}">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+</head>
+<body class="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition duration-300">
+
+<div id="content">
+
+  <!-- Hero Section -->
+  <section class="relative w-full text-white text-center">
+    <!-- Banner Image -->
+    <img src="/img/home.png" alt="Banner" class="w-full h-auto">
+
+    <!-- Overlay Content -->
+    <div class="absolute inset-0 flex flex-col items-center justify-center px-4 bg-black bg-opacity-40">
+      <h1 class="text-5xl md:text-4xl font-bold mb-4 drop-shadow-lg">Welcome to Contact Manager</h1>
+      <p class="text-xl md:text-xl mb-6 drop-shadow-lg">Manage all your contacts effortlessly and securely in one place.</p>
+      <a th:href="@{'/register'}" class="bg-red-800 rounded-lg text-xl p-3 hover:bg-red-700 transition">
+        Get Started
+      </a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="bg-gray-100 dark:bg-gray-800 py-20 transition">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Features</h2>
+      <div class="grid gap-8 grid-cols-1 md:grid-cols-3">
+
+        <!-- Feature Card -->
+        <div class="bg-white dark:bg-gray-700 rounded-xl p-6 shadow-md hover:shadow-lg transition duration-300">
+          <div class="text-orange-700 text-4xl mb-4 flex justify-center">
+            <i class="fas fa-address-book"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-center">Easy Contact Management</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-center">Add, edit, and organize your contacts in a user-friendly interface.</p>
+        </div>
+
+        <!-- Feature Card -->
+        <div class="bg-white dark:bg-gray-700 rounded-xl p-6 shadow-md hover:shadow-lg transition duration-300">
+          <div class="text-orange-700 text-4xl mb-4 flex justify-center">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-center">Secure Storage</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-center">Your data is protected with top-level encryption and security measures.</p>
+        </div>
+
+        <!-- Feature Card -->
+        <div class="bg-white dark:bg-gray-700 rounded-xl p-6 shadow-md hover:shadow-lg transition duration-300">
+          <div class="text-orange-700 text-4xl mb-4 flex justify-center">
+            <i class="fas fa-globe"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-center">24/7 Access</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-center">Access your contacts anytime, anywhere from any device.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
+
+</div>
+</body>
+</html>
