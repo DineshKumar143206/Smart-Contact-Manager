@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace = "~{base::common(~{::#content},~{::title})}">
+<head>
+<meta charset="UTF-8">
+<title th:text = "${loggedinuser.name} + ' | SCM'">Profile</title>
+
+</head>
+<body>
+<div  id = "content">
+
+
+<!-- sidebar of user logged in -->
+<div th:if = "${loggedinuser}">
+	<div th:replace = "~{user/sidebar :: sidebar}"></div>
+</div>
+
+<div class = "sm:pl-64 pt-20 " style = "height: 1000px;">
+	<div class="flex justify-center flex-col items-center"> 
+<h1 class = "text-5xl "> Dashboard page.....................................</h1>
+</div>
+</div>
+
+</div>
+
+
+</body>
+</html>
