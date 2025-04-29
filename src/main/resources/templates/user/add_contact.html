@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace = "~{base::common(~{::#content},~{::title})}">
+<head>
+<meta charset="UTF-8">
+<title >Add Contact</title>
+
+</head>
+<body>
+  <div id="content">
+
+    <!-- Sidebar -->
+    <div th:if="${loggedinuser}">
+      <div th:replace="~{user/sidebar :: sidebar}"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="sm:pl-64 min-h-screen flex items-center justify-center">
+      <div class="block w-full max-w-2xl p-8 mt-32 mb-10 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        
+        <!-- Messages -->
+        <div th:insert="message :: messagebox"></div>
+
+        <!-- Heading -->
+        <h1 class="mb-2 text-3xl text-center font-bold tracking-tight text-black-900 dark:text-white">Add New Contact</h1>
+        <p class="mb-3 font-normal text-center text-black-700 dark:text-gray-400">
+          This contact will be stored in cloud, you can direct email this contact from Smart Contact Manager...
+        </p>
+
+        <!-- Contact Form -->
+        <form novalidate th:action="@{/user/contacts/adding_contact}" method="post"
+          class="mt-5" th:object="${contactForms}" enctype="multipart/form-data">
+
+          <!-- Contact Name -->
+          <div class="mb-3">
+            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Name</label>
+            <div class="relative mb-1">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <input th:field="*{name}" type="text" autocomplete="name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ps-10 p-2.5 block w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Dinu">
+            </div>
+            <p th:if="${#fields.hasErrors('name')}" data-th-errors="*{name}" class="text-red-400 text-sm"></p>
+          </div>
+
+          <!-- Contact Email -->
+          <div class="mb-3">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Email</label>
+            <div class="relative mb-1">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <input th:field="*{email}" type="email" autocomplete="name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ps-10 p-2.5 block w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="example@gmail.com">
+            </div>
+            <p th:if="${#fields.hasErrors('email')}" data-th-errors="*{email}" class="text-red-400 text-sm"></p>
+          </div>
+
+          <!-- Contact Phone -->
+          <div class="mb-3">
+            <label for="phoneNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Number</label>
+            <div class="relative mb-1">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <i class="fa-solid fa-phone"></i>
+              </div>
+              <input th:field="*{phoneNumber}" type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ps-10 p-2.5 block w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="9619651432">
+            </div>
+            <p th:if="${#fields.hasErrors('phoneNumber')}" data-th-errors="*{phoneNumber}" class="text-red-400 text-sm"></p>
+          </div>
+
+          <!-- Address -->
+          <div class="mb-3">
+            <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Address</label>
+            <textarea th:field="*{address}" rows="4" autocomplete="name"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              placeholder="Address of the contact"></textarea>
+            <p th:if="${#fields.hasErrors('address')}" data-th-errors="*{address}" class="text-red-400 text-sm"></p>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+            <textarea th:field="*{description}" rows="4"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              placeholder="Something about contact"></textarea>
+          </div>
+
+          <!-- Social Links (Website + LinkedIn) -->
+          <div class="flex gap-3">
+            <!-- Website -->
+            <div class="w-full">
+              <div class="mb-3">
+                <div class="relative mb-6">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                    <i class="fa-solid fa-earth-asia"></i>
+                  </div>
+                  <input type="text" th:field="*{websiteLink}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ps-10 p-2.5 block w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    placeholder="http://www.SCMbyDinesh.com">
+                </div>
+              </div>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="w-full">
+              <div class="mb-3">
+                <div class="relative mb-3">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                    <i class="fa-brands fa-linkedin"></i>
+                  </div>
+                  <input type="text" th:field="*{linkedinLink}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ps-10 p-2.5 block w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    placeholder="http://www.SCMbyDinesh.com">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image Upload -->
+          <label class="block mb-3 text-sm font-medium text-gray-900 dark:text-white" for="pic" >Contact Image</label>
+          <input th:field="*{picture}" id = "pic"
+            class="block w-full mb-5 text-xs text-gray-900 border rounded-xl cursor-pointer bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+            type="file">
+
+          <!-- Preview Image -->
+          <img class = "max-h-52 mx-auto mb-5 rounded shadow m-3 " src="" id="preview" alt="" />
+
+          <!-- Favorite Check box -->
+          <div class="mb-6">
+            <input th:field="*{favorite}" type="checkbox" id= "favorite"
+              class="text-orange-500 bg-gray-100 border-gray-800 rounded-sm focus:ring-orange-500 dark:bg-gray-700 dark:border-gray-600">
+            <label for="favorite" class="ms-2 text-md font-small text-gray-900 dark:text-gray-300">Is this your favorite contact?</label>
+          </div>
+
+          <!-- Buttons -->
+          <div class="button-container text-center">
+            <button type="reset"
+              class="px-3 py-2 rounded bg-orange-800 hover:bg-red-800 text-white dark:bg-blue-600 hover:dark:bg-blue-700">
+              Reset
+            </button>
+            <button type="submit"
+              class="px-3 py-2 rounded bg-orange-800 hover:bg-red-800 text-white dark:bg-blue-600 hover:dark:bg-blue-700">
+              Add Contact
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script th:src="@{'/js/picture_preview.js'}"></script>
+  </div>
+
+  
+</body>
+
+</html>
