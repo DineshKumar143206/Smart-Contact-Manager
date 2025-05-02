@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace = "~{base::common(~{::#content},~{::title})}">
+<head>
+<meta charset="UTF-8">
+<title th:text = "${loggedinuser.name} + ' | SCM'">Search</title>
+
+</head>
+<body>
+<div  id = "content">
+
+
+<!-- side bar of user logged in -->
+<div th:if = "${loggedinuser}">
+	<div th:replace = "~{user/sidebar :: sidebar}"></div>
+</div>
+
+<div class = "sm:pl-64 pt-5 font-semibold">
+	<div class="flex justify-center flex-col items-center"> 
+<h1 class = "text-5xl mb-2"> Search Results</h1>
+<p th:text = "${pageContact.totalElements}+' Results Found'"> </p>
+</div>
+
+<!-- search -->
+<div class="contacts_container p-5">
+	
+	<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+	
+    	<form th:action="@{'/user/contacts/search'}" th:object="${searchForms}">
+    	<div class="flex p-5 gap-5 items-center justify-start flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+        
+        <div>
+         
+  <select th:field= "*{field}"  class="bg-gray-50 border w-40 text-center h-9 border-gray-300 text-gray-900 rounded-lg focus:ring-black-500 focus:border-black-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <option selected value ="" disabled hidden>Select Field</option>
+    <option value="name">Name</option>
+    <option value="phoneNumber">Phone</option>
+    <option value="email">Email</option>
+  </select>
+        </div>
+        
+        <label for="table-search" class="sr-only">Search</label>
+        <div class="relative">
+            <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+            </div>
+            <input th:field = "*{value}" type="text" id="table-search-users" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for users">
+        </div>
+        
+        <button type = "submit" class = "px-3 bg-red-800 rounded-lg text-white h-9">Search</button>
+        
+    </div>
+    	</form>
+    
+    
+    <table th:if="${pageContact.totalElements>0}"
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+            	
+                <th scope="col" class="px-6 py-3">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Phone
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Links
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c : ${pageContact.content}" th:object = "${c}" 
+            
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+              
+                <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                    <img class="w-10 h-10 rounded-full" th:src = "@{*{picture}}" onerror="this.src = 'https://www.shutterstock.com/image-vector/custom-default-profile-picture-icon-260nw-2359133587.jpg'" alt="Jese image">
+                    <div class="ps-3">
+                        <div th:text = "*{name}" class="text-base font-semibold">Neil Sims</div>
+                        <div th:text = "*{email}" class="font-normal text-gray-500">neil.sims@flowbite.com</div>
+                    </div>  
+                </th>
+                <td   class="px-6 py-4"><i class="fa-solid fa-phone w-4 h-4"></i>
+                    <span th:text = "*{phoneNumber}" ></span>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                        <div th:if = "*{favorite}" ><i class="fa-solid fa-star"></i></div> 
+                        <a th:href="@{*{WebsiteLink}}" target="blank"><i class="fa-solid fa-link w-5 h-5"></i></a>
+                        <a th:href="@{*{LinkedinLink}}" target="blank"><i class="fa-brands fa-linkedin w-5 h-5"></i></a>
+                    </div>
+                </td>
+                <td class="px-6 py-4">
+                <div>
+                
+                <!-- delete contact -->
+                <button th:data-id = "${c.id}" th:onclick = "deletecontact(this.getAttribute('data-id'))">
+                <i class="fa-solid fa-trash w-6 h-6"></i></a>
+                </button>
+                
+                <!-- updating contact information -->
+                <button th:data-id = "${c.id}" th:onclick = "deletecontact(this.getAttribute('data-id'))">
+                <i class="fa-solid fa-pen-nib w-6 h-6"></i></a>
+                </button>
+                
+                <!-- View contact information -->
+                <button th:data-id = "${c.id}" th:onclick = "loadcontactmodal(this.getAttribute('data-id'))">
+                <i class="fa-solid fa-binoculars w-6 h-6"></i></a>
+                </button>
+                
+                </div>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <!-- Pagination -->
+    <div th:if="${pageContact.totalElements>0}"
+     class="pagination_container p-5 bg-white dark:bg-gray-800 text-center">
+    	<nav aria-label="Page navigation example">
+  <ul class="inline-flex -space-x-px text-sm">
+    <li th:unless="${pageContact.first}">
+      <a data-th-href="@{'/user/contacts/search?size='+${pageSize}+'&page='+${pageContact.number-1}+'&field='+${searchForms.field}+'&value='+${searchForms.value}}"
+      
+      href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 
+      bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 
+      dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 
+      dark:hover:text-white">Previous</a>
+    </li>
+    <li data-th-each="index : ${#numbers.sequence(0,pageContact.totalPages-1)}">
+  		<a data-th-href="@{'/user/contacts/search?size='+${pageSize}+'&page='+${index}+'&field='+${searchForms.field}+'&value='+${searchForms.value}}"
+  			th:classappend = "${index==pageContact.number? 'bg-blue-100 dark:bg-gray-900' : 'bg-white dark:bg-gray-800'}"
+  			
+  			class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border 
+  			border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 
+  			dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+  			
+    		 <span data-th-text="${index + 1}"></span>
+  		</a>
+	</li>
+	<li  th:unless="${pageContact.last}">
+      <a data-th-href="@{'/user/contacts/search?size='+${pageSize}+'&page='+${pageContact.number+1}+'&field='+${searchForms.field}+'&value='+${searchForms.value}}"
+      href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white 
+      border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 
+      dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    <h1 class = "text-5xl text-center bg-white p-5 " th:if="${pageContact.totalElements<=0}">Oops !!!</h1>
+    
+</div>
+	
+</div>
+<div th:replace = "~{user/modals :: modal}"></div>
+</div>
+<script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script> 
+<script th:src = "@{'/js/modal.js'}" ></script>
+<script th:src = "@{'/js/delete_alert.js'}" ></script>
+</div>
+
+
+</body>
+</html>
