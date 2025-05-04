@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace = "~{base::common(~{::#content},~{::title})}">
+<head>
+<meta charset="UTF-8">
+<title th:text = "${loggedinuser.name} + ' | Dashboard'">Profile</title>
+
+</head>
+<body>
+<div  id = "content">
+
+
+<!-- Side bar of user logged in -->
+<div th:if = "${loggedinuser}">
+	<div th:replace = "~{user/sidebar :: sidebar}"></div>
+</div>
+
+<div class = "sm:pl-64 pt-20 ">
+	<div class="flex items-center justify-center flex-col p-8 mt-10"> 
+
+		<!-- profile card -->
+		<div class="max-w-2xl w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden p-6 text-center">
+
+  <!-- Profile Photo -->
+  <div class="flex flex-col items-center mb-4">
+    <img th:src= "@{${loggedinuser.profilePic}}" onerror="this.onerror=null;this.src='https://www.shutterstock.com/image-vector/custom-default-profile-picture-icon-260nw-2359133587.jpg';"
+         class="rounded-full h-52 w-52 object-cover mb-4 border-2 border-gray-300 dark:border-gray-600" />
+  </div>
+
+  <!-- User Info -->
+  <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-1" th:text ="${loggedinuser.name}"></h2>
+  
+  <p class="text-gray-600 dark:text-gray-400" th:text ="${loggedinuser.email}"></p>
+  
+  <p class="text-gray-600 dark:text-gray-400" th:text ="${loggedinuser.phoneNumber}"></p>
+  
+  <p class="mt-2 text-gray-500 dark:text-gray-400 text-sm" th:text ="${loggedinuser.about}">About the user...</p>
+
+  <!-- Footer Info -->
+  <div class="flex justify-between mt-6 text-sm text-gray-600 dark:text-gray-400">
+    <p class = "text-sm text-gray-500" >Email Verified: <span class="font-semibold text-red-500 dark:text-red-400" th:text ="${loggedinuser.emailVerified?'YES':'NO'}"></span></p>
+    <p class = "text-sm text-gray-500" >Phone Verified: <span class="font-semibold text-red-500 dark:text-red-400" th:text ="${loggedinuser.phoneVerified?'YES':'NO'}"></span></p>
+  </div>
+</div>
+		
+
+</div>
+</div>
+
+
+</div>
+
+
+</body>
+</html>
